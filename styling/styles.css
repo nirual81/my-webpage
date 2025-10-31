@@ -31,6 +31,36 @@ body.site {
   color: var(--text);
   background-color: var(--bg);
   line-height: 1.5;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+body.site::before,
+body.site::after {
+  content: "";
+  position: fixed;
+  width: 520px;
+  height: 520px;
+  border-radius: 50%;
+  filter: blur(140px);
+  opacity: 0.55;
+  z-index: -2;
+  pointer-events: none;
+}
+
+body.site::before {
+  top: 0;
+  left: 0;
+  background: radial-gradient(circle at center, rgba(255, 43, 214, 0.75), rgba(9, 8, 20, 0));
+  transform: translate(-30%, -40%);
+}
+
+body.site::after {
+  bottom: 0;
+  right: 0;
+  background: radial-gradient(circle at center, rgba(0, 240, 255, 0.7), rgba(9, 8, 20, 0));
+  transform: translate(25%, 35%);
 }
 
 a {
@@ -193,10 +223,11 @@ h3 {
 }
 
 .card {
-  background-color: var(--card-bg);
+  background-color: rgba(18, 18, 40, 0.82);
   border: 1px solid var(--border-color);
   box-shadow: var(--shadow-soft);
   padding: var(--space-4);
+  backdrop-filter: blur(12px);
 }
 
 .note {
