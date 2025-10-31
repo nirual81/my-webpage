@@ -69,10 +69,9 @@ main {
 }
 
 .site-name {
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 600;
   letter-spacing: 0.04em;
-  text-transform: uppercase;
 }
 
 .site-nav {
