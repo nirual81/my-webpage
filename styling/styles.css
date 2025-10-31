@@ -210,12 +210,8 @@ h3 {
   width: 100%;
   max-width: 100%;
   aspect-ratio: 1 / 1;
-  padding: var(--space-2);
-  background: linear-gradient(135deg, rgba(255, 43, 214, 0.25), rgba(0, 240, 255, 0.18), rgba(14, 6, 36, 0.85));
-  border: 1px solid var(--border-color);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 0;
+  background: none;
 }
 
 .hero-content {
@@ -227,7 +223,6 @@ h3 {
   height: 100%;
   object-fit: cover;
   display: block;
-  border: 1px solid rgba(244, 246, 251, 0.08);
 }
 
 .card {
