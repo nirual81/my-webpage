@@ -362,30 +362,56 @@
       return;
     }
 
-    container.dataset.masonryReady = 'true';
-
     function parseGapValue(value) {
       const parsed = parseFloat(value);
       return Number.isFinite(parsed) ? parsed : 0;
     }
 
+    function measureBaseSpacing() {
+      const hadReadyState = container.dataset.masonryReady === 'true';
+      if (hadReadyState) {
+        container.removeAttribute('data-masonry-ready');
+      }
+
+      const styles = window.getComputedStyle(container);
+      const columnGapValue = parseGapValue(styles.getPropertyValue('column-gap'));
+      const gapValue = parseGapValue(styles.getPropertyValue('gap'));
+      const rowGapValue = parseGapValue(styles.getPropertyValue('row-gap'));
+      const measuredSpacing = columnGapValue || gapValue || rowGapValue || 0;
+
+      if (hadReadyState) {
+        container.dataset.masonryReady = 'true';
+      }
+
+      return measuredSpacing;
+    }
+
     let rowGap = 0;
     let rowHeight = 4;
-    let spacing = 0;
-    let spacingHalf = 0;
+    let spacing = measureBaseSpacing();
+    let spacingHalf = spacing / 2;
+
+    container.dataset.masonryReady = 'true';
 
     function refreshMeasurements() {
       const styles = window.getComputedStyle(container);
       rowGap = parseGapValue(styles.getPropertyValue('row-gap'));
       rowHeight = parseFloat(styles.getPropertyValue('grid-auto-rows')) || 4;
-      const columnGapValue = parseGapValue(styles.getPropertyValue('column-gap'));
-      const gapValue = parseGapValue(styles.getPropertyValue('gap'));
-      const fallbackRowGap = parseGapValue(styles.getPropertyValue('row-gap'));
-      spacing = columnGapValue || gapValue || fallbackRowGap || 0;
+      spacing = measureBaseSpacing();
       spacingHalf = spacing / 2;
     }
 
     function applyCardSpacing() {
+      if (rowGap > 0) {
+        cards.forEach(function (card) {
+          card.style.removeProperty('margin-top');
+          card.style.removeProperty('margin-bottom');
+        });
+        container.style.removeProperty('padding-top');
+        container.style.removeProperty('padding-bottom');
+        return;
+      }
+
       cards.forEach(function (card) {
         if (spacingHalf) {
           card.style.marginTop = spacingHalf + 'px';

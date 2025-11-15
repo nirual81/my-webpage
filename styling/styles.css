@@ -416,7 +416,7 @@ h3 {
 }
 
 .project-grid[data-masonry-ready] {
-  row-gap: 0;
+  row-gap: var(--space-4);
 }
 
 .project-card {
