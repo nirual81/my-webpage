@@ -3,7 +3,8 @@
     "siteName": "Laurin Hein",
     "nav": {
       "home": "Startseite",
-      "projects": "Projekte"
+      "projects": "Projekte",
+      "demo": "Design-Demo"
     },
     "language": {
       "ariaLabel": "Sprache auswählen",
@@ -77,5 +78,35 @@
     "error": "Projekte können derzeit nicht geladen werden. Bitte versuche es später erneut.",
     "viewProject": "Projekt ansehen",
     "fullscreen": "Vollbild"
+  },
+  "demo": {
+    "meta": {
+      "title": "Laurin — Design-Demo",
+      "description": "Eine Einzelseiten-Spielwiese mit mehreren Styling-Richtungen."
+    },
+    "intro": {
+      "kicker": "Stil-Experimente",
+      "title": "Design-Demo-Lab",
+      "copy": "Wechsle zwischen Layout-Ideen und beobachte, wie sich Typografie, Raster und Motion-Cues verändern."
+    },
+    "controls": {
+      "label": "Stil auswählen",
+      "description": "Jede Option lädt eine eigene CSS-Datei – so bleibt die Vorschau vom Standard-Styling dieser Seite getrennt."
+    },
+    "stage": {
+      "title": "Konzept-Ansicht",
+      "hint": "Die Demo läuft in einem isolierten Frame. Beim Umschalten wird die verknüpfte CSS-Datei getauscht.",
+      "noscript": "Aktiviere JavaScript, um die Design-Demos zu laden."
+    },
+    "themes": {
+      "modern": "Moderner Verlauf",
+      "contrast": "Neon-Kontrast",
+      "serene": "Ruhiges Editorial"
+    },
+    "legend": {
+      "modern": "Weiche Verläufe, Großbuchstaben und Karten-Stapel für moderne Landingpages.",
+      "contrast": "Dunkler Hintergrund mit Neon-Kanten, große Typo und Testimonials im Spotlight.",
+      "serene": "Gedämpfte Pastelltöne, feine Linien und luftige Raster für textlastige Cases."
+    }
   }
 }

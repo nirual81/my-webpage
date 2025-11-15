@@ -3,7 +3,8 @@
     "siteName": "Laurin Hein",
     "nav": {
       "home": "Home",
-      "projects": "Projects"
+      "projects": "Projects",
+      "demo": "Design Demo"
     },
     "language": {
       "ariaLabel": "Select language",
@@ -77,5 +78,35 @@
     "error": "Projects cannot be loaded at the moment. Please try again later.",
     "viewProject": "View project",
     "fullscreen": "Fullscreen"
+  },
+  "demo": {
+    "meta": {
+      "title": "Laurin — Design Demo",
+      "description": "A single-page playground for multiple styling directions."
+    },
+    "intro": {
+      "kicker": "Style explorations",
+      "title": "Design demo lab",
+      "copy": "Switch between layout ideas to see how typography, grids and motion cues shift across styles."
+    },
+    "controls": {
+      "label": "Choose a style",
+      "description": "Each option loads its own CSS file so the preview stays isolated from the default site styling."
+    },
+    "stage": {
+      "title": "Concept stage",
+      "hint": "The demo renders inside an isolated frame. Toggling swaps the referenced CSS file.",
+      "noscript": "Enable JavaScript to load the design demos."
+    },
+    "themes": {
+      "modern": "Modern gradient",
+      "contrast": "Neon contrast",
+      "serene": "Serene editorial"
+    },
+    "legend": {
+      "modern": "Soft gradients, uppercase accents and stacked cards tailored for landing pages.",
+      "contrast": "Dark canvas with neon edges, oversized type and spotlighted testimonials.",
+      "serene": "Muted pastels, fine borders and airy grids for content-heavy case studies."
+    }
   }
 }

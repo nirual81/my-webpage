@@ -136,6 +136,24 @@
     languageChangeHandlers.forEach(function (handler) {
       handler(lang);
     });
+
+    if (typeof window !== 'undefined' && typeof window.dispatchEvent === 'function') {
+      try {
+        var detail = { language: lang };
+        var event;
+        if (typeof window.CustomEvent === 'function') {
+          event = new window.CustomEvent('site-language-change', { detail: detail });
+        } else if (document && typeof document.createEvent === 'function') {
+          event = document.createEvent('CustomEvent');
+          event.initCustomEvent('site-language-change', false, false, detail);
+        }
+        if (event) {
+          window.dispatchEvent(event);
+        }
+      } catch (error) {
+        // Ignored: custom event dispatch is optional.
+      }
+    }
   }
 
   function setLanguage(lang) {
@@ -211,11 +229,8 @@
 
     const links = document.querySelectorAll('[data-nav-link]');
     links.forEach(function (link) {
-      const href = link.getAttribute('href') || '';
-      const isHome =
-        activePage === 'home' && (href === 'index.html' || href === './' || href === '/');
-      const isProjects = activePage === 'projects' && href.indexOf('projects') !== -1;
-      if (isHome || isProjects) {
+      const target = link.dataset.navTarget;
+      if (target && target === activePage) {
         link.classList.add('is-active');
         link.setAttribute('aria-current', 'page');
       } else {

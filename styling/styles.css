@@ -15,6 +15,7 @@
   --space-4: 24px;
   --space-5: 32px;
   --max-width: 1040px;
+  --site-header-height: 96px;
 }
 
 *, *::before, *::after {
@@ -168,6 +169,12 @@ main {
   padding: var(--space-5) var(--space-3) var(--space-5);
 }
 
+.main-content.demo-minimal {
+  max-width: none;
+  width: 100%;
+  padding: 0;
+}
+
 .section + .section {
   margin-top: var(--space-5);
 }
@@ -179,9 +186,8 @@ main {
   background: linear-gradient(145deg, rgba(31, 111, 235, 0.08), rgba(74, 163, 255, 0.12) 60%, #ffffff);
   border: 1px solid rgba(23, 34, 59, 0.08);
   box-shadow: var(--shadow-soft);
-  grid-template-areas:
-    "media"
-    "content";
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "content";
 }
 
 .hero-kicker {
@@ -233,31 +239,8 @@ h3 {
   line-height: 1;
 }
 
-.hero-media {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  grid-area: media;
-}
-
-.avatar-frame {
-  position: relative;
-  width: 100%;
-  max-width: 100%;
-  aspect-ratio: 1 / 1;
-  padding: 0;
-  background: none;
-}
-
 .hero-content {
   grid-area: content;
-}
-
-.hero-avatar {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
 }
 
 .card {
@@ -519,17 +502,13 @@ h3 {
 
 @media (min-width: 733px) {
   .hero {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-items: center;
-    grid-template-areas: "content media";
+    grid-template-columns: minmax(0, 4fr) minmax(0, 1fr);
+    align-items: start;
+    grid-template-areas: "content .";
   }
 
   .hero-actions {
     flex-direction: row;
-  }
-
-  .avatar-frame {
-    max-width: 260px;
   }
 
   .skills-groups {
