@@ -75,6 +75,7 @@
     "loading": "Loading projects…",
     "empty": "No projects available.",
     "error": "Projects cannot be loaded at the moment. Please try again later.",
-    "viewProject": "View project"
+    "viewProject": "View project",
+    "fullscreen": "Fullscreen"
   }
 }

@@ -229,7 +229,7 @@
     const projects = [];
     const lines = markdown.split(/\r?\n/);
     let current = null;
-    let collectingImages = false;
+    let collectingMedia = '';
 
     lines.forEach(function (line) {
       if (line.startsWith('## ')) {
@@ -241,9 +241,10 @@
           title: line.replace(/^##\s*/, '').trim(),
           description: '',
           link: '',
-          images: []
+          images: [],
+          videos: []
         };
-        collectingImages = false;
+        collectingMedia = '';
         return;
       }
 
@@ -254,32 +255,42 @@
       const trimmed = line.trim();
 
       if (trimmed.length === 0) {
-        collectingImages = false;
+        collectingMedia = '';
         return;
       }
 
       if (trimmed.toLowerCase().startsWith('description:')) {
         current.description = trimmed.slice('description:'.length).trim();
-        collectingImages = false;
+        collectingMedia = '';
         return;
       }
 
       if (trimmed.toLowerCase().startsWith('link:')) {
         current.link = trimmed.slice('link:'.length).trim();
-        collectingImages = false;
+        collectingMedia = '';
         return;
       }
 
       if (trimmed.toLowerCase().startsWith('images:')) {
-        collectingImages = true;
+        collectingMedia = 'images';
         return;
       }
 
-      if (collectingImages) {
+      if (trimmed.toLowerCase().startsWith('videos:')) {
+        collectingMedia = 'videos';
+        return;
+      }
+
+      if (collectingMedia) {
         if (trimmed.startsWith('- ')) {
           const path = trimmed.slice(2).trim();
           if (path) {
-            current.images.push(path);
+            if (collectingMedia === 'images') {
+              current.images.push(path);
+            }
+            if (collectingMedia === 'videos') {
+              current.videos.push(path);
+            }
           }
         }
         return;
@@ -296,6 +307,102 @@
     return projects.filter(function (project) {
       return project.title;
     });
+  }
+
+  function isVideoSource(src) {
+    return typeof src === 'string' && /\.(mp4|webm|ogg)(?:$|[?#])/i.test(src);
+  }
+
+  function collectProjectMedia(project) {
+    const media = [];
+    if (Array.isArray(project.images)) {
+      project.images.forEach(function (src) {
+        if (!src) {
+          return;
+        }
+        media.push({
+          type: isVideoSource(src) ? 'video' : 'image',
+          src: src
+        });
+      });
+    }
+
+    if (Array.isArray(project.videos)) {
+      project.videos.forEach(function (src) {
+        if (!src) {
+          return;
+        }
+        media.push({
+          type: 'video',
+          src: src
+        });
+      });
+    }
+
+    return media;
+  }
+
+  function requestVideoFullscreen(video) {
+    let request = null;
+    if (video.requestFullscreen) {
+      request = video.requestFullscreen();
+    } else if (video.webkitEnterFullscreen) {
+      video.webkitEnterFullscreen();
+      return;
+    } else if (video.webkitRequestFullscreen) {
+      request = video.webkitRequestFullscreen();
+    } else if (video.msRequestFullscreen) {
+      request = video.msRequestFullscreen();
+    }
+
+    if (request && typeof request.catch === 'function') {
+      request.catch(function (error) {
+        console.warn('Unable to enter fullscreen mode:', error);
+      });
+    }
+  }
+
+  function createVideoFullscreenButton(video) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'project-video-button';
+    const label = t('projects.fullscreen', 'Vollbild');
+    button.setAttribute('aria-label', label);
+    button.textContent = label;
+    button.addEventListener('click', function (event) {
+      event.preventDefault();
+      event.stopPropagation();
+      requestVideoFullscreen(video);
+    });
+    return button;
+  }
+
+  function createMediaFigure(entry, projectTitle) {
+    const figure = document.createElement('figure');
+    figure.className = 'project-image';
+
+    if (entry.type === 'video') {
+      figure.classList.add('project-image--video');
+      const video = document.createElement('video');
+      video.src = entry.src;
+      video.controls = true;
+      video.setAttribute('controls', '');
+      video.preload = 'metadata';
+      video.playsInline = true;
+      video.setAttribute('playsinline', '');
+      video.setAttribute('aria-label', projectTitle + ' video');
+      const fullscreenButton = createVideoFullscreenButton(video);
+      figure.appendChild(video);
+      figure.appendChild(fullscreenButton);
+      return figure;
+    }
+
+    const img = document.createElement('img');
+    img.src = entry.src;
+    img.alt = projectTitle + ' preview';
+    img.loading = 'lazy';
+    figure.appendChild(img);
+    return figure;
   }
 
   function createProjectCard(project) {
@@ -330,19 +437,12 @@
       card.appendChild(actions);
     }
 
-    if (project.images && project.images.length > 0) {
+    const media = collectProjectMedia(project);
+    if (media.length > 0) {
       const gallery = document.createElement('div');
       gallery.className = 'project-images';
-      project.images.forEach(function (src) {
-        const figure = document.createElement('figure');
-        figure.className = 'project-image';
-
-        const img = document.createElement('img');
-        img.src = src;
-        img.alt = project.title + ' preview';
-        img.loading = 'lazy';
-
-        figure.appendChild(img);
+      media.forEach(function (entry) {
+        const figure = createMediaFigure(entry, project.title);
         gallery.appendChild(figure);
       });
       card.appendChild(gallery);
