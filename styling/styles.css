@@ -412,6 +412,11 @@ h3 {
   display: grid;
   gap: var(--space-4);
   align-items: start;
+  grid-auto-rows: 8px;
+}
+
+.project-grid[data-masonry-ready] {
+  row-gap: 0;
 }
 
 .project-card {

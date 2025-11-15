@@ -342,6 +342,122 @@
     return media;
   }
 
+  function teardownProjectMasonry(container) {
+    if (!container || !container.__projectMasonryCleanup) {
+      return;
+    }
+    container.__projectMasonryCleanup();
+    delete container.__projectMasonryCleanup;
+  }
+
+  function applyProjectMasonry(container) {
+    if (!container) {
+      return;
+    }
+
+    teardownProjectMasonry(container);
+
+    const cards = container.querySelectorAll('.project-card');
+    if (!cards.length) {
+      return;
+    }
+
+    container.dataset.masonryReady = 'true';
+
+    function parseGapValue(value) {
+      const parsed = parseFloat(value);
+      return Number.isFinite(parsed) ? parsed : 0;
+    }
+
+    let rowGap = 0;
+    let rowHeight = 4;
+    let spacing = 0;
+    let spacingHalf = 0;
+
+    function refreshMeasurements() {
+      const styles = window.getComputedStyle(container);
+      rowGap = parseGapValue(styles.getPropertyValue('row-gap'));
+      rowHeight = parseFloat(styles.getPropertyValue('grid-auto-rows')) || 4;
+      const columnGapValue = parseGapValue(styles.getPropertyValue('column-gap'));
+      const gapValue = parseGapValue(styles.getPropertyValue('gap'));
+      const fallbackRowGap = parseGapValue(styles.getPropertyValue('row-gap'));
+      spacing = columnGapValue || gapValue || fallbackRowGap || 0;
+      spacingHalf = spacing / 2;
+    }
+
+    function applyCardSpacing() {
+      cards.forEach(function (card) {
+        if (spacingHalf) {
+          card.style.marginTop = spacingHalf + 'px';
+          card.style.marginBottom = spacingHalf + 'px';
+        } else {
+          card.style.removeProperty('margin-top');
+          card.style.removeProperty('margin-bottom');
+        }
+      });
+
+      if (spacingHalf) {
+        container.style.paddingTop = spacingHalf + 'px';
+        container.style.paddingBottom = spacingHalf + 'px';
+      } else {
+        container.style.removeProperty('padding-top');
+        container.style.removeProperty('padding-bottom');
+      }
+    }
+
+    function setCardSpan(card, measuredHeight) {
+      const heightValue = typeof measuredHeight === 'number' ? measuredHeight : card.offsetHeight;
+      const divisor = rowHeight + rowGap;
+      const span = divisor ? Math.max(1, Math.ceil((heightValue + rowGap) / divisor)) : 1;
+      card.style.gridRowEnd = 'span ' + span;
+    }
+
+    function updateLayout() {
+      refreshMeasurements();
+      cards.forEach(function (card) {
+        setCardSpan(card);
+      });
+      applyCardSpacing();
+    }
+
+    updateLayout();
+
+    const resizeObserver =
+      typeof window.ResizeObserver === 'function'
+        ? new window.ResizeObserver(function (entries) {
+            entries.forEach(function (entry) {
+              setCardSpan(entry.target, entry.contentRect && entry.contentRect.height);
+            });
+          })
+        : null;
+
+    if (resizeObserver) {
+      cards.forEach(function (card) {
+        resizeObserver.observe(card);
+      });
+    }
+
+    const handleResize = function () {
+      updateLayout();
+    };
+    window.addEventListener('resize', handleResize);
+
+    container.__projectMasonryCleanup = function () {
+      window.removeEventListener('resize', handleResize);
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+      }
+      cards.forEach(function (card) {
+        card.style.removeProperty('grid-row-end');
+        card.style.removeProperty('margin-top');
+        card.style.removeProperty('margin-bottom');
+      });
+      container.style.removeProperty('padding-top');
+      container.style.removeProperty('padding-bottom');
+      delete container.dataset.masonryReady;
+    };
+  }
+
   function requestVideoFullscreen(video) {
     let request = null;
     if (video.requestFullscreen) {
@@ -452,6 +568,7 @@
   }
 
   function renderProjects(projects, container) {
+    teardownProjectMasonry(container);
     container.innerHTML = '';
 
     if (!projects.length) {
@@ -469,6 +586,7 @@
     });
 
     container.appendChild(fragment);
+    applyProjectMasonry(container);
   }
 
   function initProjects() {
@@ -481,6 +599,7 @@
     let hasError = false;
 
     function showLoading() {
+      teardownProjectMasonry(container);
       container.innerHTML = '';
       const loadingMessage = document.createElement('p');
       loadingMessage.className = 'note';
@@ -489,6 +608,7 @@
     }
 
     function showError() {
+      teardownProjectMasonry(container);
       container.innerHTML = '';
       const message = document.createElement('p');
       message.className = 'empty-state';
