@@ -7,13 +7,13 @@
     },
     "language": {
       "ariaLabel": "Sprache auswählen",
-      "de": "German",
-      "en": "English"
+      "de": "Deutsch",
+      "en": "Englisch"
     },
     "buttons": {
       "email": "E-Mail"
     },
-    "emailAddress": "[email@domain.com]",
+    "emailAddress": "heinlaurin@icloud.net",
     "levels": {
       "intermediate": "Fortgeschritten",
       "beginner": "Grundlagen"
@@ -27,51 +27,53 @@
     "hero": {
       "kicker": "Student Developer",
       "title": "Python & Web Entwickler. KI-Enthusiast.",
-      "copy": "Ich baue gern kleine, fokussierte Erlebnisse, die Automatisierung mit klaren Interfaces verbinden.",
+      "copy": "Ich habe Spaß daran, kleine Programme zu entwickeln, die meinen Alltag vereinfachen, Aufgaben automatisieren und echte Probleme lösen.",
       "imageLabel": "Porträt von Laurin",
       "imageAlt": "Porträt von Laurin"
     },
     "bio": {
       "title": "Biografie",
-      "text": "Ich mache derzeit mein Abitur und plane, Informatik zu studieren.",
+      "text": "Ich mache derzeit mein Abitur und plane anschließend, Informatik zu studieren – mit einem besonderen Fokus auf KI und moderne Entwicklungswerkzeuge.",
       "nowLabel": "Jetzt",
-      "nowValue": "[aktueller Fokus]",
+      "nowValue": "Abitur – KI-Arbeitsumgebung",
       "nextLabel": "Als Nächstes",
-      "nextValue": "[bevorstehender Fokus]"
+      "nextValue": "Informatikstudium"
     },
     "skills": {
       "title": "Fähigkeiten & Tech-Stack",
       "pythonTitle": "Python",
       "pythonFlask": "Flask",
       "pythonSqlite": "sqlite3",
+      "pythonPytorch": "PyTorch (Grundlagen)",
       "webTitle": "Web-Grundlagen",
       "webHtml": "HTML",
       "webCss": "CSS",
       "webJs": "JavaScript",
-      "footerLink": "github.com/username"
+      "webVue": "Vue 3 (Grundlagen)",
+      "footerLink": "github.com/nirual81"
     },
     "services": {
       "title": "Verfügbar für:",
       "note": "Preisrahmen variiert.",
       "pythonTitle": "Python-Automatisierungen",
-      "pythonDescription": "Kleine Skripte und Tools.",
+      "pythonDescription": "Kleine Terminal-Tools, Web-Scraper, einfache Bots und individuelle Automatisierungen in Python.",
       "aiTitle": "KI-Projekte",
-      "aiDescription": "Kleine KI-Werkzeuge und Prototypen.",
+      "aiDescription": "Experimente mit lokalen KIs (zum Beispiel über Ollama), selbst trainierten Mini-Modellen für Text und kleinen KI-Werkzeugen sowie Prototypen.",
       "webTitle": "Websites",
-      "webDescription": "Simple Websites, ähnlich wie diese..."
+      "webDescription": "Einfache Portfolios, Landingpages und Infoseiten – bei Bedarf auch mit kleinem Backend."
     }
   },
   "projects": {
     "meta": {
       "title": "Laurin — Projekte",
-      "description": "Projekte von Laurin."
+      "description": "Eine Übersicht über Projekte von Laurin in den Bereichen Python, Web und KI."
     },
     "heading": {
       "title": "Projekte",
       "note": "Eine Übersicht über meine bisherigen Projekte."
     },
     "loading": "Projekte werden geladen…",
-    "empty": "Keine Projekte Verfügbar.",
+    "empty": "Keine Projekte verfügbar.",
     "error": "Projekte können derzeit nicht geladen werden. Bitte versuche es später erneut.",
     "viewProject": "Projekt ansehen"
   }

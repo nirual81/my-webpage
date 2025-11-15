@@ -6,73 +6,75 @@
       "projects": "Projects"
     },
     "language": {
-      "ariaLabel": "Choose language",
+      "ariaLabel": "Select language",
       "de": "German",
       "en": "English"
     },
     "buttons": {
       "email": "Email"
     },
-    "emailAddress": "[email@domain.com]",
+    "emailAddress": "heinlaurin@icloud.net",
     "levels": {
       "intermediate": "Intermediate",
-      "beginner": "Fundamentals"
+      "beginner": "Beginner"
     }
   },
   "home": {
     "meta": {
       "title": "Laurin Hein",
-      "description": "Python & web. AI enthusiast."
+      "description": "Python & Web. AI enthusiast."
     },
     "hero": {
-      "kicker": "Student developer",
-      "title": "Python & web developer. AI enthusiast.",
-      "copy": "I enjoy building small, focused experiences that combine automation with clean interfaces.",
+      "kicker": "Student Developer",
+      "title": "Python & Web Developer. AI enthusiast.",
+      "copy": "I enjoy building small programs that simplify my everyday life, automate tasks and solve real problems for me and others.",
       "imageLabel": "Portrait of Laurin",
       "imageAlt": "Portrait of Laurin"
     },
     "bio": {
-      "title": "Bio",
-      "text": "I’m currently making my Abitur and plan to study computer science.",
+      "title": "Biography",
+      "text": "I'm currently finishing my Abitur (German high school diploma) and plan to study computer science afterwards, with a particular interest in AI and modern development tools.",
       "nowLabel": "Now",
-      "nowValue": "[current focus]",
+      "nowValue": "Abitur – AI workspace",
       "nextLabel": "Next",
-      "nextValue": "[upcoming focus]"
+      "nextValue": "Computer science degree"
     },
     "skills": {
       "title": "Skills & Tech Stack",
       "pythonTitle": "Python",
       "pythonFlask": "Flask",
       "pythonSqlite": "sqlite3",
-      "webTitle": "Web Core",
+      "pythonPytorch": "PyTorch (beginner)",
+      "webTitle": "Web basics",
       "webHtml": "HTML",
       "webCss": "CSS",
       "webJs": "JavaScript",
-      "footerLink": "github.com/username"
+      "webVue": "Vue 3 (beginner)",
+      "footerLink": "github.com/nirual81"
     },
     "services": {
-      "title": "Services",
+      "title": "Available for:",
       "note": "Price range varies.",
       "pythonTitle": "Python automations",
-      "pythonDescription": "Small scripts and tooling.",
+      "pythonDescription": "Small terminal tools, web scrapers, simple bots and custom automations in Python.",
       "aiTitle": "AI projects",
-      "aiDescription": "Lightweight AI features and prototypes.",
+      "aiDescription": "Experiments with local AIs (for example via Ollama), small self-trained text models and lightweight AI tools and prototypes.",
       "webTitle": "Websites",
-      "webDescription": "Simple, clean sites."
+      "webDescription": "Simple portfolios, landing pages and info pages – with small backends if needed."
     }
   },
   "projects": {
     "meta": {
       "title": "Laurin — Projects",
-      "description": "Projects by Laurin."
+      "description": "An overview of Laurin's projects in Python, web and AI."
     },
     "heading": {
       "title": "Projects",
-      "note": "A running log of what I am learning and building."
+      "note": "An overview of my previous projects."
     },
     "loading": "Loading projects…",
-    "empty": "Projects coming soon.",
-    "error": "Unable to load projects right now. Please try again later.",
+    "empty": "No projects available.",
+    "error": "Projects cannot be loaded at the moment. Please try again later.",
     "viewProject": "View project"
   }
 }
