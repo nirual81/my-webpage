@@ -6,6 +6,15 @@
   padding: var(--space-5);
   background: #ffffff;
   color: #05070e;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .demo-lab {
+    display: grid;
+    grid-template-areas: "stage";
+    gap: 0;
+  }
 }
 
 .demo-controls {
@@ -20,6 +29,18 @@
   width: min(360px, 100%);
   margin-left: auto;
   backdrop-filter: blur(8px);
+}
+
+@media (min-width: 768px) {
+  .demo-controls {
+    grid-area: stage;
+    justify-self: end;
+    align-self: start;
+    position: sticky;
+    top: calc(var(--site-header-height, 0px) + var(--space-3));
+    margin: var(--space-5);
+    z-index: 5;
+  }
 }
 
 .demo-controls-label {
@@ -71,11 +92,20 @@
   flex-direction: column;
   gap: var(--space-3);
   box-shadow: 0 45px 90px rgba(15, 23, 42, 0.15);
+  min-height: 0;
+}
+
+@media (min-width: 768px) {
+  .demo-stage-wrapper {
+    grid-area: stage;
+    min-height: calc(100vh - var(--site-header-height, 0px) - (var(--space-5) * 2));
+  }
 }
 
 .demo-stage {
   width: 100%;
   flex: 1;
+  height: 100%;
   min-height: 0;
   border: none;
   border-radius: 24px;
@@ -104,16 +134,21 @@
   .demo-stage-wrapper {
     padding: var(--space-3);
     border-radius: 24px;
+    min-height: auto;
   }
 
   .demo-stage {
     border-radius: 16px;
+    height: auto;
   }
 
   .demo-controls {
     width: 100%;
     margin-left: 0;
     padding: var(--space-3);
+    position: static;
+    margin: 0;
+    top: auto;
   }
 
   .demo-style-buttons {
