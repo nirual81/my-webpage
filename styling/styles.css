@@ -411,10 +411,12 @@ h3 {
 .project-grid {
   display: grid;
   gap: var(--space-4);
+  align-items: start;
 }
 
 .project-card {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: var(--space-3);
 }
 
