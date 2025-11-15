@@ -409,14 +409,19 @@ h3 {
 }
 
 .project-grid {
+  --project-grid-gap: var(--space-4);
   display: grid;
-  gap: var(--space-4);
+  gap: var(--project-grid-gap);
+  column-gap: var(--project-grid-gap);
+  grid-column-gap: var(--project-grid-gap);
+  row-gap: var(--project-grid-gap);
+  grid-row-gap: var(--project-grid-gap);
   align-items: start;
-  grid-auto-rows: 8px;
 }
 
 .project-grid[data-masonry-ready] {
-  row-gap: var(--space-4);
+  row-gap: var(--project-grid-gap);
+  grid-row-gap: var(--project-grid-gap);
 }
 
 .project-card {

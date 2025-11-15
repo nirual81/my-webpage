@@ -367,6 +367,9 @@
       return Number.isFinite(parsed) ? parsed : 0;
     }
 
+    const rootStyles = window.getComputedStyle(document.documentElement);
+    const rootGapFallback = parseGapValue(rootStyles.getPropertyValue('--space-4')) || 24;
+
     function measureBaseSpacing() {
       const hadReadyState = container.dataset.masonryReady === 'true';
       if (hadReadyState) {
@@ -377,7 +380,7 @@
       const columnGapValue = parseGapValue(styles.getPropertyValue('column-gap'));
       const gapValue = parseGapValue(styles.getPropertyValue('gap'));
       const rowGapValue = parseGapValue(styles.getPropertyValue('row-gap'));
-      const measuredSpacing = columnGapValue || gapValue || rowGapValue || 0;
+      const measuredSpacing = columnGapValue || gapValue || rowGapValue || rootGapFallback;
 
       if (hadReadyState) {
         container.dataset.masonryReady = 'true';
@@ -389,53 +392,38 @@
     let rowGap = 0;
     let rowHeight = 4;
     let spacing = measureBaseSpacing();
-    let spacingHalf = spacing / 2;
 
     container.dataset.masonryReady = 'true';
+    container.style.rowGap = spacing + 'px';
+    container.style.setProperty('grid-row-gap', spacing + 'px');
+    container.style.columnGap = spacing + 'px';
+    container.style.setProperty('grid-column-gap', spacing + 'px');
 
     function refreshMeasurements() {
       const styles = window.getComputedStyle(container);
       rowGap = parseGapValue(styles.getPropertyValue('row-gap'));
       rowHeight = parseFloat(styles.getPropertyValue('grid-auto-rows')) || 4;
       spacing = measureBaseSpacing();
-      spacingHalf = spacing / 2;
+      container.style.rowGap = spacing + 'px';
+      container.style.setProperty('grid-row-gap', spacing + 'px');
+      container.style.columnGap = spacing + 'px';
+      container.style.setProperty('grid-column-gap', spacing + 'px');
     }
 
     function applyCardSpacing() {
-      if (rowGap > 0) {
-        cards.forEach(function (card) {
-          card.style.removeProperty('margin-top');
-          card.style.removeProperty('margin-bottom');
-        });
-        container.style.removeProperty('padding-top');
-        container.style.removeProperty('padding-bottom');
-        return;
-      }
-
       cards.forEach(function (card) {
-        if (spacingHalf) {
-          card.style.marginTop = spacingHalf + 'px';
-          card.style.marginBottom = spacingHalf + 'px';
-        } else {
-          card.style.removeProperty('margin-top');
-          card.style.removeProperty('margin-bottom');
-        }
+        card.style.removeProperty('margin-top');
+        card.style.removeProperty('margin-bottom');
       });
-
-      if (spacingHalf) {
-        container.style.paddingTop = spacingHalf + 'px';
-        container.style.paddingBottom = spacingHalf + 'px';
-      } else {
-        container.style.removeProperty('padding-top');
-        container.style.removeProperty('padding-bottom');
-      }
+      container.style.removeProperty('padding-top');
+      container.style.removeProperty('padding-bottom');
     }
 
     function setCardSpan(card, measuredHeight) {
       const heightValue = typeof measuredHeight === 'number' ? measuredHeight : card.offsetHeight;
       const divisor = rowHeight + rowGap;
-      const span = divisor ? Math.max(1, Math.ceil((heightValue + rowGap) / divisor)) : 1;
-      card.style.gridRowEnd = 'span ' + span;
+      const span = divisor > 0 ? Math.ceil((heightValue + rowGap) / divisor) : 1;
+      card.style.gridRowEnd = 'span ' + Math.max(1, span);
     }
 
     function updateLayout() {
@@ -447,6 +435,50 @@
     }
 
     updateLayout();
+
+    const mediaCleanup = [];
+
+    function addMediaListener(element, type, handler) {
+      element.addEventListener(type, handler);
+      mediaCleanup.push(function () {
+        element.removeEventListener(type, handler);
+      });
+    }
+
+    function refreshCardForMedia(mediaElement) {
+      if (!mediaElement) {
+        return;
+      }
+      const card = mediaElement.closest('.project-card');
+      if (!card) {
+        return;
+      }
+      window.requestAnimationFrame(function () {
+        setCardSpan(card);
+      });
+    }
+
+    function handleMediaLoad(event) {
+      refreshCardForMedia(event.target);
+    }
+
+    const mediaElements = container.querySelectorAll('.project-image img, .project-image video');
+    mediaElements.forEach(function (media) {
+      const tag = media.tagName;
+      if (tag === 'IMG') {
+        addMediaListener(media, 'load', handleMediaLoad);
+        addMediaListener(media, 'error', handleMediaLoad);
+        if (media.complete && media.naturalWidth) {
+          refreshCardForMedia(media);
+        }
+      } else if (tag === 'VIDEO') {
+        addMediaListener(media, 'loadedmetadata', handleMediaLoad);
+        addMediaListener(media, 'loadeddata', handleMediaLoad);
+        if (media.readyState >= 1) {
+          refreshCardForMedia(media);
+        }
+      }
+    });
 
     const resizeObserver =
       typeof window.ResizeObserver === 'function'
@@ -480,6 +512,14 @@
       });
       container.style.removeProperty('padding-top');
       container.style.removeProperty('padding-bottom');
+      container.style.removeProperty('row-gap');
+      container.style.removeProperty('grid-row-gap');
+      container.style.removeProperty('column-gap');
+      container.style.removeProperty('grid-column-gap');
+      mediaCleanup.forEach(function (cleanup) {
+        cleanup();
+      });
+      mediaCleanup.length = 0;
       delete container.dataset.masonryReady;
     };
   }
