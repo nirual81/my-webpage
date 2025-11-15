@@ -1,0 +1,78 @@
+{
+  "common": {
+    "siteName": "Laurin Hein",
+    "nav": {
+      "home": "Startseite",
+      "projects": "Projekte"
+    },
+    "language": {
+      "ariaLabel": "Sprache auswählen",
+      "de": "German",
+      "en": "English"
+    },
+    "buttons": {
+      "email": "E-Mail"
+    },
+    "emailAddress": "[email@domain.com]",
+    "levels": {
+      "intermediate": "Fortgeschritten",
+      "beginner": "Grundlagen"
+    }
+  },
+  "home": {
+    "meta": {
+      "title": "Laurin Hein",
+      "description": "Python & Web. KI-Enthusiast."
+    },
+    "hero": {
+      "kicker": "Student Developer",
+      "title": "Python & Web Entwickler. KI-Enthusiast.",
+      "copy": "Ich baue gern kleine, fokussierte Erlebnisse, die Automatisierung mit klaren Interfaces verbinden.",
+      "imageLabel": "Porträt von Laurin",
+      "imageAlt": "Porträt von Laurin"
+    },
+    "bio": {
+      "title": "Biografie",
+      "text": "Ich mache derzeit mein Abitur und plane, Informatik zu studieren.",
+      "nowLabel": "Jetzt",
+      "nowValue": "[aktueller Fokus]",
+      "nextLabel": "Als Nächstes",
+      "nextValue": "[bevorstehender Fokus]"
+    },
+    "skills": {
+      "title": "Fähigkeiten & Tech-Stack",
+      "pythonTitle": "Python",
+      "pythonFlask": "Flask",
+      "pythonSqlite": "sqlite3",
+      "webTitle": "Web-Grundlagen",
+      "webHtml": "HTML",
+      "webCss": "CSS",
+      "webJs": "JavaScript",
+      "footerLink": "github.com/username"
+    },
+    "services": {
+      "title": "Verfügbar für:",
+      "note": "Preisrahmen variiert.",
+      "pythonTitle": "Python-Automatisierungen",
+      "pythonDescription": "Kleine Skripte und Tools.",
+      "aiTitle": "KI-Projekte",
+      "aiDescription": "Kleine KI-Werkzeuge und Prototypen.",
+      "webTitle": "Websites",
+      "webDescription": "Simple Websites, ähnlich wie diese..."
+    }
+  },
+  "projects": {
+    "meta": {
+      "title": "Laurin — Projekte",
+      "description": "Projekte von Laurin."
+    },
+    "heading": {
+      "title": "Projekte",
+      "note": "Eine Übersicht über meine bisherigen Projekte."
+    },
+    "loading": "Projekte werden geladen…",
+    "empty": "Keine Projekte Verfügbar.",
+    "error": "Projekte können derzeit nicht geladen werden. Bitte versuche es später erneut.",
+    "viewProject": "Projekt ansehen"
+  }
+}

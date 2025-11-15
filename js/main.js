@@ -1,4 +1,207 @@
 (function () {
+  const DEFAULT_LANGUAGE = 'de';
+  const SUPPORTED_LANGUAGES = ['de', 'en'];
+  const LANGUAGE_STORAGE_KEY = 'preferredLanguage';
+  const languageCache = {};
+  const languagePromises = {};
+  const languageChangeHandlers = [];
+  let currentLanguage = DEFAULT_LANGUAGE;
+  let translations = {};
+
+  function isSupportedLanguage(lang) {
+    return SUPPORTED_LANGUAGES.indexOf(lang) !== -1;
+  }
+
+  function getStoredLanguage() {
+    try {
+      return window.localStorage.getItem(LANGUAGE_STORAGE_KEY);
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function saveLanguage(lang) {
+    try {
+      window.localStorage.setItem(LANGUAGE_STORAGE_KEY, lang);
+    } catch (error) {
+      // Ignored: storage may be unavailable.
+    }
+  }
+
+  function loadLanguageData(lang) {
+    if (languageCache[lang]) {
+      return Promise.resolve(languageCache[lang]);
+    }
+
+    if (!languagePromises[lang]) {
+      languagePromises[lang] = fetch('assets/lang/' + lang + '.json')
+        .then(function (response) {
+          if (!response.ok) {
+            throw new Error('Failed to load translations for ' + lang + ' (' + response.status + ')');
+          }
+          return response.json();
+        })
+        .then(function (data) {
+          languageCache[lang] = data;
+          delete languagePromises[lang];
+          return data;
+        })
+        .catch(function (error) {
+          delete languagePromises[lang];
+          throw error;
+        });
+    }
+
+    return languagePromises[lang];
+  }
+
+  function t(key, fallback) {
+    if (!key) {
+      return typeof fallback === 'string' ? fallback : '';
+    }
+
+    const segments = key.split('.');
+    let value = translations;
+
+    for (let i = 0; i < segments.length; i += 1) {
+      const segment = segments[i];
+      if (value && Object.prototype.hasOwnProperty.call(value, segment)) {
+        value = value[segment];
+      } else {
+        return typeof fallback === 'undefined' ? key : fallback;
+      }
+    }
+
+    if (typeof value === 'string') {
+      return value;
+    }
+
+    return typeof fallback === 'undefined' ? key : fallback;
+  }
+
+  function applyTranslationToElement(element) {
+    if (element.hasAttribute('data-i18n')) {
+      const key = element.getAttribute('data-i18n');
+      const fallback = element.textContent;
+      const translated = t(key, fallback);
+      if (typeof translated === 'string') {
+        element.textContent = translated;
+      }
+    }
+
+    if (element.hasAttribute('data-i18n-attr')) {
+      const mappings = element.getAttribute('data-i18n-attr').split(';');
+      for (let i = 0; i < mappings.length; i += 1) {
+        const pair = mappings[i].trim();
+        if (!pair) {
+          continue;
+        }
+
+        const parts = pair.split(':');
+        if (parts.length !== 2) {
+          continue;
+        }
+
+        const attr = parts[0].trim();
+        const attrKey = parts[1].trim();
+        if (!attr || !attrKey) {
+          continue;
+        }
+
+        const fallbackAttr = element.getAttribute(attr) || '';
+        const translatedAttr = t(attrKey, fallbackAttr);
+        if (typeof translatedAttr === 'string') {
+          element.setAttribute(attr, translatedAttr);
+        }
+      }
+    }
+  }
+
+  function applyTranslations(root) {
+    const scope = root || document;
+    const elements = scope.querySelectorAll('[data-i18n], [data-i18n-attr]');
+    elements.forEach(applyTranslationToElement);
+  }
+
+  function updateLanguageToggleValue(lang) {
+    const toggles = document.querySelectorAll('[data-language-toggle]');
+    toggles.forEach(function (toggle) {
+      if (toggle.value !== lang) {
+        toggle.value = lang;
+      }
+    });
+  }
+
+  function notifyLanguageChange(lang) {
+    languageChangeHandlers.forEach(function (handler) {
+      handler(lang);
+    });
+  }
+
+  function setLanguage(lang) {
+    if (!isSupportedLanguage(lang)) {
+      return Promise.reject(new Error('Unsupported language: ' + lang));
+    }
+
+    if (lang === currentLanguage && Object.keys(translations).length) {
+      updateLanguageToggleValue(lang);
+      return Promise.resolve(translations);
+    }
+
+    return loadLanguageData(lang).then(function (messages) {
+      translations = messages || {};
+      currentLanguage = lang;
+      document.documentElement.lang = lang;
+      applyTranslations(document);
+      updateLanguageToggleValue(lang);
+      saveLanguage(lang);
+      notifyLanguageChange(lang);
+      return messages;
+    });
+  }
+
+  function initLocalization() {
+    const stored = getStoredLanguage();
+    const initial = isSupportedLanguage(stored) ? stored : DEFAULT_LANGUAGE;
+    updateLanguageToggleValue(initial);
+    return setLanguage(initial).catch(function (error) {
+      if (initial !== DEFAULT_LANGUAGE) {
+        console.error('Falling back to default language after error:', error);
+        return setLanguage(DEFAULT_LANGUAGE);
+      }
+      throw error;
+    });
+  }
+
+  function onLanguageChange(handler) {
+    if (typeof handler === 'function') {
+      languageChangeHandlers.push(handler);
+    }
+  }
+
+  function initLanguageToggle() {
+    const toggles = document.querySelectorAll('[data-language-toggle]');
+    if (!toggles.length) {
+      return;
+    }
+
+    toggles.forEach(function (toggle) {
+      toggle.addEventListener('change', function (event) {
+        const selected = event.target.value;
+        if (!isSupportedLanguage(selected) || selected === currentLanguage) {
+          event.target.value = currentLanguage;
+          return;
+        }
+
+        setLanguage(selected).catch(function () {
+          event.target.value = currentLanguage;
+        });
+      });
+    });
+
+    updateLanguageToggleValue(currentLanguage);
+  }
+
   function initNavigation() {
     const body = document.body;
     const activePage = body.dataset.page;
@@ -7,13 +210,17 @@
     }
 
     const links = document.querySelectorAll('[data-nav-link]');
-    links.forEach((link) => {
+    links.forEach(function (link) {
       const href = link.getAttribute('href') || '';
-      const isHome = activePage === 'home' && (href === 'index.html' || href === './' || href === '/');
+      const isHome =
+        activePage === 'home' && (href === 'index.html' || href === './' || href === '/');
       const isProjects = activePage === 'projects' && href.indexOf('projects') !== -1;
       if (isHome || isProjects) {
         link.classList.add('is-active');
         link.setAttribute('aria-current', 'page');
+      } else {
+        link.classList.remove('is-active');
+        link.removeAttribute('aria-current');
       }
     });
   }
@@ -24,7 +231,7 @@
     let current = null;
     let collectingImages = false;
 
-    lines.forEach((line) => {
+    lines.forEach(function (line) {
       if (line.startsWith('## ')) {
         if (current) {
           current.description = current.description.trim();
@@ -78,9 +285,7 @@
         return;
       }
 
-      current.description = current.description
-        ? current.description + ' ' + trimmed
-        : trimmed;
+      current.description = current.description ? current.description + ' ' + trimmed : trimmed;
     });
 
     if (current) {
@@ -88,7 +293,9 @@
       projects.push(current);
     }
 
-    return projects.filter((project) => project.title);
+    return projects.filter(function (project) {
+      return project.title;
+    });
   }
 
   function createProjectCard(project) {
@@ -113,7 +320,7 @@
       const viewLink = document.createElement('a');
       viewLink.className = 'button button-primary';
       viewLink.href = project.link;
-      viewLink.textContent = 'View project';
+      viewLink.textContent = t('projects.viewProject', 'Projekt ansehen');
       if (/^https?:/i.test(project.link)) {
         viewLink.target = '_blank';
         viewLink.rel = 'noreferrer';
@@ -126,7 +333,7 @@
     if (project.images && project.images.length > 0) {
       const gallery = document.createElement('div');
       gallery.className = 'project-images';
-      project.images.forEach((src) => {
+      project.images.forEach(function (src) {
         const figure = document.createElement('figure');
         figure.className = 'project-image';
 
@@ -150,13 +357,13 @@
     if (!projects.length) {
       const empty = document.createElement('p');
       empty.className = 'empty-state';
-      empty.textContent = 'Projects coming soon.';
+      empty.textContent = t('projects.empty', 'Projekte folgen bald.');
       container.appendChild(empty);
       return;
     }
 
     const fragment = document.createDocumentFragment();
-    projects.forEach((project) => {
+    projects.forEach(function (project) {
       const card = createProjectCard(project);
       fragment.appendChild(card);
     });
@@ -170,31 +377,70 @@
       return;
     }
 
-    container.textContent = 'Loading projects…';
+    let projectsData = null;
+    let hasError = false;
+
+    function showLoading() {
+      container.innerHTML = '';
+      const loadingMessage = document.createElement('p');
+      loadingMessage.className = 'note';
+      loadingMessage.textContent = t('projects.loading', 'Projekte werden geladen…');
+      container.appendChild(loadingMessage);
+    }
+
+    function showError() {
+      container.innerHTML = '';
+      const message = document.createElement('p');
+      message.className = 'empty-state';
+      message.textContent = t(
+        'projects.error',
+        'Projekte können derzeit nicht geladen werden. Bitte versuche es später erneut.'
+      );
+      container.appendChild(message);
+    }
+
+    showLoading();
+
+    onLanguageChange(function () {
+      if (hasError) {
+        showError();
+        return;
+      }
+      if (!projectsData) {
+        showLoading();
+        return;
+      }
+      renderProjects(projectsData, container);
+    });
 
     fetch('assets/projects.md')
-      .then((response) => {
+      .then(function (response) {
         if (!response.ok) {
           throw new Error('Request failed with status ' + response.status);
         }
         return response.text();
       })
-      .then((text) => {
-        const projects = parseProjects(text);
-        renderProjects(projects, container);
+      .then(function (text) {
+        projectsData = parseProjects(text);
+        hasError = false;
+        renderProjects(projectsData, container);
       })
-      .catch((error) => {
+      .catch(function (error) {
+        hasError = true;
         console.error('Unable to load projects:', error);
-        container.innerHTML = '';
-        const message = document.createElement('p');
-        message.className = 'empty-state';
-        message.textContent = 'Unable to load projects right now. Please try again later.';
-        container.appendChild(message);
+        showError();
       });
   }
 
   document.addEventListener('DOMContentLoaded', function () {
-    initNavigation();
-    initProjects();
+    initLanguageToggle();
+    initLocalization()
+      .catch(function (error) {
+        console.error('Localization failed:', error);
+      })
+      .then(function () {
+        initNavigation();
+        initProjects();
+      });
   });
 })();

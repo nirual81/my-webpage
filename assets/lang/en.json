@@ -1,0 +1,78 @@
+{
+  "common": {
+    "siteName": "Laurin Hein",
+    "nav": {
+      "home": "Home",
+      "projects": "Projects"
+    },
+    "language": {
+      "ariaLabel": "Choose language",
+      "de": "German",
+      "en": "English"
+    },
+    "buttons": {
+      "email": "Email"
+    },
+    "emailAddress": "[email@domain.com]",
+    "levels": {
+      "intermediate": "Intermediate",
+      "beginner": "Fundamentals"
+    }
+  },
+  "home": {
+    "meta": {
+      "title": "Laurin Hein",
+      "description": "Python & web. AI enthusiast."
+    },
+    "hero": {
+      "kicker": "Student developer",
+      "title": "Python & web developer. AI enthusiast.",
+      "copy": "I enjoy building small, focused experiences that combine automation with clean interfaces.",
+      "imageLabel": "Portrait of Laurin",
+      "imageAlt": "Portrait of Laurin"
+    },
+    "bio": {
+      "title": "Bio",
+      "text": "I’m currently making my Abitur and plan to study computer science.",
+      "nowLabel": "Now",
+      "nowValue": "[current focus]",
+      "nextLabel": "Next",
+      "nextValue": "[upcoming focus]"
+    },
+    "skills": {
+      "title": "Skills & Tech Stack",
+      "pythonTitle": "Python",
+      "pythonFlask": "Flask",
+      "pythonSqlite": "sqlite3",
+      "webTitle": "Web Core",
+      "webHtml": "HTML",
+      "webCss": "CSS",
+      "webJs": "JavaScript",
+      "footerLink": "github.com/username"
+    },
+    "services": {
+      "title": "Services",
+      "note": "Price range varies.",
+      "pythonTitle": "Python automations",
+      "pythonDescription": "Small scripts and tooling.",
+      "aiTitle": "AI projects",
+      "aiDescription": "Lightweight AI features and prototypes.",
+      "webTitle": "Websites",
+      "webDescription": "Simple, clean sites."
+    }
+  },
+  "projects": {
+    "meta": {
+      "title": "Laurin — Projects",
+      "description": "Projects by Laurin."
+    },
+    "heading": {
+      "title": "Projects",
+      "note": "A running log of what I am learning and building."
+    },
+    "loading": "Loading projects…",
+    "empty": "Projects coming soon.",
+    "error": "Unable to load projects right now. Please try again later.",
+    "viewProject": "View project"
+  }
+}

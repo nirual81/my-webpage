@@ -1,51 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Student developer — Python & web. AI enthusiast." />
-    <title>Laurin — Student Developer</title>
+    <meta
+      name="description"
+      content="Schülerentwickler — Python &amp; Web. KI-Enthusiast."
+      data-i18n-attr="content:home.meta.description"
+    />
+    <title data-i18n="home.meta.title">-</title>
     <link rel="stylesheet" href="styling/styles.css" />
   </head>
   <body class="site" data-page="home">
     <header class="site-header">
       <div class="header-inner">
-        <a class="site-name" href="index.html">Laurin Hein</a>
-        <nav class="site-nav" aria-label="Primary">
-          <a class="nav-link" href="index.html" data-nav-link>Home</a>
-          <a class="nav-link" href="projects.html" data-nav-link>Projects</a>
-        </nav>
+        <a class="site-name" href="index.html" data-i18n="common.siteName">Laurin Hein</a>
+        <div class="header-controls">
+          <nav class="site-nav" aria-label="Primary">
+            <a class="nav-link" href="index.html" data-nav-link data-i18n="common.nav.home"></a>
+            <a class="nav-link" href="projects.html" data-nav-link data-i18n="common.nav.projects"></a>
+          </nav>
+          <select
+            class="language-toggle"
+            data-language-toggle
+            data-i18n-attr="aria-label:common.language.ariaLabel"
+          >
+            <option value="de" data-i18n="common.language.de">German</option>
+            <option value="en" data-i18n="common.language.en">English</option>
+          </select>
+        </div>
       </div>
     </header>
     <main class="main-content">
       <section class="hero section" id="hero">
         <div class="hero-content">
-          <p class="hero-kicker">Student developer</p>
-          <h1>Student developer — Python &amp; web. AI enthusiast.</h1>
-          <p class="hero-copy">I enjoy building small, focused experiences that combine automation with clean interfaces.</p>
+          <p class="hero-kicker" data-i18n="home.hero.kicker"></p>
+          <h1 data-i18n="home.hero.title"></h1>
+          <p class="hero-copy" data-i18n="home.hero.copy"></p>
           <div class="hero-actions">
-            <a class="button button-primary" href="mailto:email@domain.com">Email</a>
-            <span class="hero-email">[email@domain.com]</span>
+            <a class="button button-primary" href="mailto:email@domain.com" data-i18n="common.buttons.email"></a>
+            <span class="hero-email" data-i18n="common.emailAddress">[email@domain.com]</span>
           </div>
         </div>
         <div class="hero-media">
-          <div class="avatar-frame" role="img" aria-label="Portrait of Laurin">
-            <img class="hero-avatar" src="assets/portrait.jpg" alt="Portrait of Laurin" loading="lazy" />
+          <div class="avatar-frame" role="img" data-i18n-attr="aria-label:home.hero.imageLabel">
+            <img
+              class="hero-avatar"
+              src="assets/portrait.jpg"
+              alt="Porträt von Laurin"
+              loading="lazy"
+              data-i18n-attr="alt:home.hero.imageAlt"
+            />
           </div>
         </div>
       </section>
       <section class="section" id="bio">
         <div class="card bio-card">
-          <h2>Bio</h2>
-          <p>I’m currently making my Abitur and plan to study computer science.</p>
+          <h2 data-i18n="home.bio.title"></h2>
+          <p data-i18n="home.bio.text"></p>
           <div class="bio-chips">
             <div class="chip">
-              <span class="chip-label">Now</span>
-              <span class="chip-text">[current focus]</span>
+              <span class="chip-label" data-i18n="home.bio.nowLabel"></span>
+              <span class="chip-text" data-i18n="home.bio.nowValue"></span>
             </div>
             <div class="chip">
-              <span class="chip-label">Next</span>
-              <span class="chip-text">[upcoming focus]</span>
+              <span class="chip-label" data-i18n="home.bio.nextLabel"></span>
+              <span class="chip-text" data-i18n="home.bio.nextValue"></span>
             </div>
           </div>
         </div>
@@ -53,66 +73,74 @@
       <section class="section" id="skills">
         <div class="card skills-card">
           <div class="skills-header">
-            <h2>Skills &amp; Tech Stack</h2>
+            <h2 data-i18n="home.skills.title"></h2>
           </div>
           <div class="skills-groups">
             <div class="skills-group">
-              <h3>Python</h3>
+              <h3 data-i18n="home.skills.pythonTitle">Python</h3>
               <ul>
                 <li>
-                  <span>Flask</span>
-                  <span class="badge">Intermediate</span>
+                  <span data-i18n="home.skills.pythonFlask">Flask</span>
+                  <span class="badge" data-i18n="common.levels.intermediate"></span>
                 </li>
                 <li>
-                  <span>sqlite3</span>
-                  <span class="badge">Intermediate</span>
+                  <span data-i18n="home.skills.pythonSqlite">sqlite3</span>
+                  <span class="badge" data-i18n="common.levels.intermediate"></span>
                 </li>
               </ul>
             </div>
             <div class="skills-group">
-              <h3>Web Core</h3>
+              <h3 data-i18n="home.skills.webTitle"></h3>
               <ul>
                 <li>
-                  <span>HTML</span>
-                  <span class="badge badge-neutral">Beginner</span>
+                  <span data-i18n="home.skills.webHtml">HTML</span>
+                  <span class="badge badge-neutral" data-i18n="common.levels.beginner"></span>
                 </li>
                 <li>
-                  <span>CSS</span>
-                  <span class="badge badge-neutral">Beginner</span>
+                  <span data-i18n="home.skills.webCss">CSS</span>
+                  <span class="badge badge-neutral" data-i18n="common.levels.beginner"></span>
                 </li>
                 <li>
-                  <span>JavaScript</span>
-                  <span class="badge badge-neutral">Beginner</span>
+                  <span data-i18n="home.skills.webJs">JavaScript</span>
+                  <span class="badge badge-neutral" data-i18n="common.levels.beginner"></span>
                 </li>
               </ul>
             </div>
           </div>
           <div class="skills-footer">
-            <a class="link" href="https://github.com/username" target="_blank" rel="noreferrer">github.com/username</a>
+            <a
+              class="link"
+              href="https://github.com/username"
+              target="_blank"
+              rel="noreferrer"
+              data-i18n="home.skills.footerLink"
+            >
+              github.com/username
+            </a>
           </div>
         </div>
       </section>
       <section class="section" id="services">
         <div class="section-heading">
-          <h2>Services</h2>
-          <p class="note">Price range varies.</p>
+          <h2 data-i18n="home.services.title"></h2>
+          <p class="note" data-i18n="home.services.note"></p>
         </div>
         <div class="service-grid">
           <article class="card service-card">
-            <h3>Python automations</h3>
-            <p>Small scripts and tooling.</p>
+            <h3 data-i18n="home.services.pythonTitle"></h3>
+            <p data-i18n="home.services.pythonDescription"></p>
           </article>
           <article class="card service-card">
-            <h3>AI projects</h3>
-            <p>Lightweight AI features and prototypes.</p>
+            <h3 data-i18n="home.services.aiTitle"></h3>
+            <p data-i18n="home.services.aiDescription"></p>
           </article>
           <article class="card service-card">
-            <h3>Websites</h3>
-            <p>Simple, clean sites.</p>
+            <h3 data-i18n="home.services.webTitle"></h3>
+            <p data-i18n="home.services.webDescription"></p>
           </article>
         </div>
         <div class="service-cta">
-          <a class="button button-primary" href="mailto:email@domain.com">Email</a>
+          <a class="button button-primary" href="mailto:email@domain.com" data-i18n="common.buttons.email"></a>
         </div>
       </section>
     </main>
