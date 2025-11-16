@@ -66,7 +66,6 @@ img {
 .hero-text {
   position: static;
   order: 1;
-  border-top: 1px solid var(--line);
   padding: clamp(24px, 5vw, 48px) clamp(20px, 5vw, 60px);
 }
 
