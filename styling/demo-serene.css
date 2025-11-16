@@ -151,19 +151,35 @@ img {
   column-gap: 48px;
 }
 
+@media (min-width: 1100px) {
+  .story-intro {
+    column-count: 2;
+  }
+}
+
 .story-intro p {
   margin: 0 0 18px;
 }
 
 .story-block {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  grid-template-areas: "text media";
   gap: 48px;
   align-items: stretch;
   grid-auto-rows: minmax(0, 1fr);
 }
 
+.story-block .story-text {
+  grid-area: text;
+}
+
+.story-block .story-media {
+  grid-area: media;
+}
+
 .story-block-reverse {
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
   grid-template-areas: "media text";
 }
 
@@ -174,8 +190,9 @@ img {
   box-shadow: 0 22px 60px rgba(37, 52, 45, 0.07);
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 12px;
+  align-self: start;
 }
 
 .story-text h2 {
@@ -306,13 +323,29 @@ img {
     flex-direction: row;
     flex-wrap: wrap;
     width: 100%;
-    padding: 32px 60px 60px;
+    padding: 32px 40px 50px;
+    gap: 20px;
+  }
+
+  .hero-note {
+    flex: 1 1 260px;
   }
 
   .story-block,
   .story-block-reverse,
   .story-gallery {
     grid-template-columns: 1fr;
+  }
+
+  .story-block,
+  .story-block-reverse {
+    grid-auto-rows: auto;
+    grid-template-areas: "text" "media";
+    gap: 32px;
+  }
+
+  .story-panel {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .story-media {
@@ -332,14 +365,39 @@ img {
 @media (max-width: 600px) {
   .demo-story {
     padding: 0 20px;
+    gap: 48px;
   }
 
   .hero-text {
     padding: 36px 28px;
   }
 
+  .hero-text h1 {
+    font-size: 2rem;
+  }
+
   .hero-meta {
     gap: 8px;
+  }
+
+  .story-block {
+    gap: 32px;
+  }
+
+  .story-gallery {
+    gap: 28px;
+  }
+
+  .canvas-hero {
+    min-height: auto;
+  }
+
+  .hero-image {
+    height: 420px;
+  }
+
+  .story-panel {
+    gap: 20px;
   }
 
   .story-text,
@@ -348,5 +406,25 @@ img {
   .story-note,
   .story-credits {
     padding: 24px;
+  }
+
+  .hero-notes {
+    flex-direction: column;
+    padding: 20px 24px 32px;
+  }
+
+  .hero-note {
+    width: 100%;
+    padding: 16px 18px;
+    border-radius: 16px;
+    flex: none;
+  }
+
+  .hero-note h3 {
+    font-size: 1rem;
+  }
+
+  .hero-note p {
+    font-size: 0.9rem;
   }
 }
