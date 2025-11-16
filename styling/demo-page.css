@@ -9,6 +9,7 @@
   background: #ffffff;
   color: #05070e;
   position: relative;
+  --demo-controls-stack: clamp(220px, 34vh, 320px);
 }
 
 @media (min-width: 768px) {
@@ -110,10 +111,31 @@
   flex: 1;
   height: 100%;
   min-height: 0;
-  border: none;
   border-radius: 24px;
+  overflow: hidden;
+  clip-path: inset(0 round 24px);
   background-color: #ffffff;
   box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.05);
+}
+
+.demo-stage-frame {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  border: none;
+  display: block;
+  border-radius: 24px;
+  overflow: hidden;
+  background-color: transparent;
+}
+
+@media (max-width: 768px) {
+  .demo-stage {
+    min-height: max(
+      360px,
+      calc(100vh - var(--site-header-height, 0px) - (var(--space-4) * 2) - var(--demo-controls-stack, 240px))
+    );
+  }
 }
 
 .demo-noscript {
@@ -127,7 +149,7 @@
   .demo-lab {
     padding: var(--space-4);
     padding-bottom: var(--space-4);
-    height: auto;
+    height: calc(100vh - var(--site-header-height, 0px));
     min-height: calc(100vh - var(--site-header-height, 0px));
   }
 }
@@ -146,6 +168,10 @@
 
   .demo-stage {
     border-radius: 16px;
+    min-height: max(
+      320px,
+      calc(100vh - var(--site-header-height, 0px) - (var(--space-3) * 2) - var(--demo-controls-stack, 240px))
+    );
   }
 
   .demo-controls {
