@@ -161,8 +161,7 @@ img {
   position: relative;
   margin-top: -120px;
   background: linear-gradient(180deg, rgba(11, 17, 26, 1) 0%, #141b27 100%);
-  border-top-left-radius: 48px;
-  border-top-right-radius: 48px;
+  border-radius: 48px;
   padding: 120px clamp(24px, 8vw, 140px) 96px;
   z-index: 4;
   display: flex;
@@ -439,8 +438,7 @@ img {
   .demo-story {
     margin-top: 0;
     padding: 80px 20px 72px;
-    border-top-left-radius: 32px;
-    border-top-right-radius: 32px;
+    border-radius: 32px;
     gap: 48px;
   }
 
