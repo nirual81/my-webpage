@@ -99,9 +99,9 @@
       "noscript": "Enable JavaScript to load the design demos."
     },
     "themes": {
-      "modern": "Modern gradient",
-      "contrast": "Whiteframe layout",
-      "serene": "Serene editorial"
+      "modern": "Modern",
+      "contrast": "Whiteframe",
+      "serene": "Serene"
     },
     "legend": {
       "modern": "Soft gradients, uppercase accents and stacked cards tailored for landing pages.",
