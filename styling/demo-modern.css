@@ -57,7 +57,7 @@ img {
   inset: 0;
   background: #000000;
   background: linear-gradient(90deg, rgba(0, 0, 0, 0.79) 30%, rgba(110, 110, 110, 1) 58%, rgba(255, 255, 255, 0) 100%);
-  mix-blend-mode: soft-light;
+  pointer-events: none;
   z-index: 1;
 }
 
