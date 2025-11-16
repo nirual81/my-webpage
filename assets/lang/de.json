@@ -100,12 +100,12 @@
     },
     "themes": {
       "modern": "Moderner Verlauf",
-      "contrast": "Neon-Kontrast",
+      "contrast": "Weißraum-Layout",
       "serene": "Ruhiges Editorial"
     },
     "legend": {
       "modern": "Weiche Verläufe, Großbuchstaben und Karten-Stapel für moderne Landingpages.",
-      "contrast": "Dunkler Hintergrund mit Neon-Kanten, große Typo und Testimonials im Spotlight.",
+      "contrast": "Helles Layout voller Weißraum, klare Linien und ruhige Typografie für strukturierte Cases.",
       "serene": "Gedämpfte Pastelltöne, feine Linien und luftige Raster für textlastige Cases."
     }
   }

@@ -2,14 +2,10 @@
   'use strict';
 
   function hydrateDemo(stage, cssPath) {
-    if (!stage || !cssPath) {
+    if (!stage || !cssPath || !stage.contentWindow) {
       return;
     }
-
-    var styleLink = stage.contentDocument.querySelector('link[rel="stylesheet"]');
-    if (styleLink) {
-      styleLink.setAttribute('href', cssPath);
-    }
+    stage.contentWindow.postMessage({ type: 'demo-theme', href: cssPath }, '*');
   }
 
   function getCssPathFromButton(button) {
@@ -39,11 +35,19 @@
       activeButton.classList.add('is-active');
     }
 
-    var render = function () {
-      var cssPath = getCssPathFromButton(activeButton);
-      if (cssPath) {
-        hydrateDemo(stage, cssPath);
+    var stageReady = false;
+    var pendingCss = null;
+
+    var pushTheme = function () {
+      if (!stageReady || !pendingCss) {
+        return;
       }
+      hydrateDemo(stage, pendingCss);
+    };
+
+    var render = function () {
+      pendingCss = getCssPathFromButton(activeButton);
+      pushTheme();
     };
 
     var setActiveButton = function (button) {
@@ -65,9 +69,16 @@
       });
     }
 
-    stage.addEventListener('load', function() {
-      render();
+    stage.addEventListener('load', function () {
+      stageReady = true;
+      pushTheme();
     });
+
+    if (stage.contentDocument && stage.contentDocument.readyState === 'complete') {
+      stageReady = true;
+    }
+
+    render();
   }
 
   document.addEventListener('DOMContentLoaded', initDemoLab);

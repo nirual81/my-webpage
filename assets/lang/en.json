@@ -100,12 +100,12 @@
     },
     "themes": {
       "modern": "Modern gradient",
-      "contrast": "Neon contrast",
+      "contrast": "Whiteframe layout",
       "serene": "Serene editorial"
     },
     "legend": {
       "modern": "Soft gradients, uppercase accents and stacked cards tailored for landing pages.",
-      "contrast": "Dark canvas with neon edges, oversized type and spotlighted testimonials.",
+      "contrast": "Bright canvas with crisp dividers, generous white space and calm editorial type.",
       "serene": "Muted pastels, fine borders and airy grids for content-heavy case studies."
     }
   }
