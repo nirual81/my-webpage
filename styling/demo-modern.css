@@ -56,14 +56,14 @@ img {
   position: absolute;
   inset: 0;
   background: #000000;
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0.79) 30%, rgba(110, 110, 110, 1) 58%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.85) 30%, rgba(255, 255, 255, 0) 100%);
   pointer-events: none;
   z-index: 1;
 }
 
 .hero-text {
   position: absolute;
-  bottom: 12%;
+  top: clamp(60px, 14vh, 220px);
   left: clamp(24px, 6vw, 140px);
   max-width: 520px;
   z-index: 2;
@@ -94,10 +94,16 @@ img {
 }
 
 .hero-meta {
-  margin-top: 24px;
-  display: flex;
+  margin-top: clamp(20px, 4vw, 36px);
+  display: inline-flex;
   flex-wrap: wrap;
   gap: 12px;
+  padding: 18px 24px;
+  border-radius: 32px;
+  background: rgba(4, 7, 11, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(16px);
 }
 
 .hero-meta span {
@@ -107,9 +113,9 @@ img {
   font-size: 0.9rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  padding: 6px 14px;
+  padding: 6px 12px;
   border-radius: 999px;
-  background: rgba(4, 7, 11, 0.6);
+  background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.25);
 }
 
@@ -141,20 +147,20 @@ img {
 
 .hero-note-one {
   top: 20%;
-  left: min(65%, calc(50% + 120px));
-  transform: translate(-20%, 0);
+  left: min(72%, calc(58% + 200px));
+  transform: translate(-18%, 0);
 }
 
 .hero-note-two {
   top: 52%;
-  left: min(75%, calc(55% + 160px));
-  transform: translate(-10%, -10%);
+  left: min(82%, calc(60% + 200px));
+  transform: translate(-12%, -10%);
 }
 
 .demo-story {
   position: relative;
   margin-top: -120px;
-  background: linear-gradient(180deg, rgba(11, 17, 26, 0.9) 0%, #141b27 100%);
+  background: linear-gradient(180deg, rgba(11, 17, 26, 1) 0%, #141b27 100%);
   border-top-left-radius: 48px;
   border-top-right-radius: 48px;
   padding: 120px clamp(24px, 8vw, 140px) 96px;
@@ -325,12 +331,12 @@ img {
 @media (max-width: 960px) {
   .hero-note-one {
     top: 18%;
-    left: 55%;
+    left: 62%;
   }
 
   .hero-note-two {
     top: 56%;
-    left: 62%;
+    left: 68%;
   }
 
   .story-block {
@@ -348,12 +354,15 @@ img {
   }
 
   .hero-text {
+    top: auto;
     bottom: 10%;
     left: 20px;
     right: 20px;
   }
 
   .hero-meta {
+    width: 100%;
+    padding: 16px;
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
